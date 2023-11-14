@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>My Basic Form</title>
+  </head>
+  <body>
+    <h1 style="text-align: center">Newsletter Sign-Up</h1>
+    <form name="MyForm" method="Post" action="thankyou.html">
+      <div style="text-align: center">
+        <input type="text" name="fullname" placeholder="Your name" />
+        <input type="text" name="email" placeholder="Your email" />
+        <input type="text" name="number" placeholder="Your number" />
+        <input
+          type="submit"
+          name="submit"
+          value="Submit"
+          onClick="javascript:return validateInputs();"
+        />
+      </div>
+    </form>
+    <script>
+      function validateInputs() {
+        var SubmitForm;
+        var FormErrors;
+
+        SubmitForm = true;
+
+        var fullname = new String(document.MyForm.fullname.value);
+        var email = new String(document.MyForm.email.value);
+        var number = new String(document.MyForm.number.value);
+
+        if (fullname.length < 1 || email.length < 1 || number.length < 1) {
+          FormErrors = "All fields are mandatory. Please complete the form.";
+          SubmitForm = false;
+        } else {
+          var filter =
+            /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+
+          if (!filter.test(email)) {
+            FormErrors =
+              "Your form contains invalid field entries. Please correct your form before submitting";
+            SubmitForm = false;
+          }
+        }
+
+        if (number.length < 1) {
+          FormErrors = "All fields are mandatory. Please complete the form.";
+          SubmitForm = false;
+        } else {
+          var filter = /^\d+$/;
+
+          if (!filter.test(number)) {
+            FormErrors =
+              "Your form contains invalid field entries. Please correct your form before submitting";
+            SubmitForm = false;
+          }
+        }
+
+        if (SubmitForm == false) {
+          alert(FormErrors);
+          return false;
+        } else {
+          fullname = fullname.replace(/[^a-z0-9\s\-]/gim, "");
+          fullname = fullname.trim();
+          email = email.replace(/[^a-z0-9_@.-]/gim, "");
+          email = email.trim();
+          email = number.replace(/[/^\d+$/]/gim, "");
+          email = number.trim();
+
+          document.MyForm.submit();
+        }
+      }
+    </script>
+  </body>
+</html>
